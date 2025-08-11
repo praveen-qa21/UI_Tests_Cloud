@@ -19,7 +19,7 @@ public class RegistrationTest extends BaseTest {
                 .submit()
                 .getNameFromConfirmationMsg();
 
-        Assert.assertEquals(actualFirstName, "Praveen");
+        Assert.assertEquals(actualFirstName, "Prawin");
         System.out.println("Test Completed");
 
     }
