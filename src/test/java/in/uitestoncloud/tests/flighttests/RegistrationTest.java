@@ -9,8 +9,8 @@ public class RegistrationTest extends BaseTest {
 
 
     @Test
-    public void validateFirstNameInConfirmationPage() throws InterruptedException {
-
+    public void validateFirstNameInConfirmationPage()  {
+        System.out.println("Test Starts");
         driver.get("https://d1uh9e7cu07ukd.cloudfront.net/selenium-docker/reservation-app/index.html");
         CustomerRegistration registration = new CustomerRegistration(driver);
 
@@ -20,6 +20,7 @@ public class RegistrationTest extends BaseTest {
                 .getNameFromConfirmationMsg();
 
         Assert.assertEquals(actualFirstName, "Praveen");
+        System.out.println("Test Completed");
 
     }
 

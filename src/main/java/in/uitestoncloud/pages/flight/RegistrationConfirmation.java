@@ -2,6 +2,10 @@ package in.uitestoncloud.pages.flight;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class RegistrationConfirmation {
 
@@ -11,11 +15,10 @@ public class RegistrationConfirmation {
         this.driver = driver;
     }
 
-    public String getNameFromConfirmationMsg() throws InterruptedException {
+    public String getNameFromConfirmationMsg() {
 
-        Thread.sleep(2000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
-
-        return driver.findElement(By.xpath("//p[@class='mt-3']//b")).getText();
+        return wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='mt-3']//b"))).getText();
     }
 }

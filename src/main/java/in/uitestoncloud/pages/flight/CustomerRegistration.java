@@ -2,17 +2,18 @@ package in.uitestoncloud.pages.flight;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.function.BiConsumer;
+import java.time.Duration;
 
 public class CustomerRegistration {
 
     WebDriver driver;
 
-    public CustomerRegistration(WebDriver driver){
+    public CustomerRegistration(WebDriver driver) {
         this.driver = driver;
     }
-
 
 
     public CustomerRegistration enterFirstName(String firstName) {
@@ -22,13 +23,14 @@ public class CustomerRegistration {
         return this;
     }
 
-    public CustomerRegistration andThen(){
+    public CustomerRegistration andThen() {
         return this;
     }
 
 
     public RegistrationConfirmation submit() {
-        driver.findElement(By.id("register-btn")).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("register-btn"))).click();
         return new RegistrationConfirmation(driver);
     }
 }
