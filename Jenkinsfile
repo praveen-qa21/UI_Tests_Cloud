@@ -4,7 +4,7 @@ pipeline {
     }
 
     environment{
-        browserName='CHROME'
+        browserName='chrome'
     }
 
 
@@ -18,8 +18,9 @@ pipeline {
         stage('execution stage') {
             steps {
                 echo "hello world"
-                bat mvn clean test -P pr-checks -D browserName=chrome
-                echo ${browserName}
+                echo "browserName:  ${browserName}"
+                bat "mvn clean test -P pr-checks -DbrowserName=${browserName}"
+
             }
         }
 
