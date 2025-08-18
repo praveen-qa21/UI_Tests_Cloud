@@ -1,5 +1,7 @@
 package in.uitestoncloud.pages.flight;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,7 +21,7 @@ public class CustomerRegistration {
     public CustomerRegistration enterFirstName(String firstName) {
 
         driver.findElement(By.id("firstName")).sendKeys(firstName);
-
+        Allure.step("Enter username: " +firstName);
         return this;
     }
 
@@ -31,6 +33,7 @@ public class CustomerRegistration {
     public RegistrationConfirmation submit() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.elementToBeClickable(By.id("register-btn"))).click();
+        Allure.step("Click Register button");
         return new RegistrationConfirmation(driver);
     }
 }

@@ -1,5 +1,6 @@
 package in.uitestoncloud.pages.vendor;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Objects;
@@ -16,6 +17,7 @@ public class ForgotPassword {
 
     public boolean isForgetPwdOpened() throws InterruptedException {
         Thread.sleep(2000);
+        Allure.step("Forgot Password Page is Opened");
         return Objects.equals(driver.getTitle(), "Forgot Password");
     }
 }

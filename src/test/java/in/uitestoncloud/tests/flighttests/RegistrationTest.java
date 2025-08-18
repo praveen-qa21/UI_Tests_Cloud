@@ -3,6 +3,9 @@ package in.uitestoncloud.tests.flighttests;
 import in.uitestoncloud.pages.flight.CustomerRegistration;
 import in.uitestoncloud.tests.BaseTest;
 import in.uitestoncloud.utils.usingOwner.ConfigFactory;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -10,8 +13,8 @@ public class RegistrationTest extends BaseTest {
 
 
     @Test
+    @Description("validate the firstName In Confirmation Page")
     public void validateFirstNameInConfirmationPage()  {
-        System.out.println("Test Starts");
         driver.get(ConfigFactory.getConfig().flight_reservation());
         CustomerRegistration registration = new CustomerRegistration(driver);
 
@@ -21,7 +24,5 @@ public class RegistrationTest extends BaseTest {
                 .getNameFromConfirmationMsg();
 
         Assert.assertEquals(actualFirstName, "Praveen");
-        System.out.println("Test Completed");
-
     }
 }

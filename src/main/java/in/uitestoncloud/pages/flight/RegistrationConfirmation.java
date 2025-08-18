@@ -1,5 +1,7 @@
 package in.uitestoncloud.pages.flight;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,6 +21,8 @@ public class RegistrationConfirmation {
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
-        return wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='mt-3']//b"))).getText();
+        String firstName = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//p[@class='mt-3']//b"))).getText();
+        Allure.step("Get UserName From Confirmation Page");
+        return firstName;
     }
 }

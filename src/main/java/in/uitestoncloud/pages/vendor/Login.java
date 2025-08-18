@@ -1,5 +1,6 @@
 package in.uitestoncloud.pages.vendor;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -17,6 +18,7 @@ public class Login {
 //        driver.findElement(By.id("username")).sendKeys();
 //        driver.findElement(By.id("password")).sendKeys();
         driver.findElement(By.id("login")).click();
+        Allure.step("Login Btn Clicked with Invalid Creds");
         return new ForgotPassword(driver);
     }
 
