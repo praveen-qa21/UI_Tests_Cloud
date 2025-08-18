@@ -14,5 +14,5 @@ public interface ConfigProp extends Config {
 
     String vendor_portal();
 
-
+    String browserName();
 }

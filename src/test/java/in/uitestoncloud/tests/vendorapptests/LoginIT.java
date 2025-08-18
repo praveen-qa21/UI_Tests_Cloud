@@ -7,7 +7,7 @@ import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class LoginTest extends BaseTest {
+public class LoginIT extends BaseTest {
 
 
     @Test

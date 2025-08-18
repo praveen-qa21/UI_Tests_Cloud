@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="RegressionTests" >
+    <test name="FlightAndVendorTests">
+        <classes>
+            <class name="in.uitestoncloud.tests.flighttests.RegistrationIT"/>
+            <class name="in.uitestoncloud.tests.vendorapptests.LoginIT"/>
+        </classes>
+    </test>
+</suite>

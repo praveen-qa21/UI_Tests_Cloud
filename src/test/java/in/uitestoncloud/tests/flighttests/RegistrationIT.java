@@ -3,13 +3,11 @@ package in.uitestoncloud.tests.flighttests;
 import in.uitestoncloud.pages.flight.CustomerRegistration;
 import in.uitestoncloud.tests.BaseTest;
 import in.uitestoncloud.utils.usingOwner.ConfigFactory;
-import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
-import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class RegistrationTest extends BaseTest {
+public class RegistrationIT extends BaseTest {
 
 
     @Test
@@ -26,3 +24,5 @@ public class RegistrationTest extends BaseTest {
         Assert.assertEquals(actualFirstName, "Praveen");
     }
 }
+
+
