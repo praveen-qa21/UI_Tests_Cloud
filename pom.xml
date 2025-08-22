@@ -84,7 +84,7 @@
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <!--suppress UnresolvedMavenProperty -->
-                        <browserName>${browserName}</browserName>
+                        <browserName>${browserType}</browserName>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -107,7 +107,7 @@
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <!--suppress UnresolvedMavenProperty -->
-                        <browserName>${browserName}</browserName>
+                        <browserName>${browserType}</browserName>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
