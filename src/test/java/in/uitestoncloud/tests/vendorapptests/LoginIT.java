@@ -13,9 +13,9 @@ public class LoginIT extends BaseTest {
     @Test
     @Description("validate the Invalid Login")
     public void validateInvalidLogin() throws InterruptedException {
-        Login login = new Login(driver);
+        Login login = new Login(driver.get());
 
-        driver.get(ConfigFactory.getConfig().vendorPortalUrl());
+        driver.get().get(ConfigFactory.getConfig().vendorPortalUrl());
 
         Assert.assertTrue(login.loginWithWrongCreds().isForgetPwdOpened());
     }

@@ -9,14 +9,14 @@ public class SimpleSmokeTest extends BaseTest {
 
     @Test
     public void isFlightReservationUP(){
-        driver.get(ConfigFactory.getConfig().flightReservationUrl());
-        Assert.assertEquals(driver.getTitle(), "Book Your Flights");
+        driver.get().get(ConfigFactory.getConfig().flightReservationUrl());
+        Assert.assertEquals(driver.get().getTitle(), "Book Your Flights");
     }
 
     @Test
     public void isVendorPortalUP(){
-        driver.get(ConfigFactory.getConfig().vendorPortalUrl());
-        Assert.assertEquals(driver.getTitle(), "Login");
+        driver.get().get(ConfigFactory.getConfig().vendorPortalUrl());
+        Assert.assertEquals(driver.get().getTitle(), "Login");
     }
 
 }

@@ -13,8 +13,8 @@ public class RegistrationIT extends BaseTest {
     @Test
     @Description("validate the firstName In Confirmation Page")
     public void validateFirstNameInConfirmationPage()  {
-        driver.get(ConfigFactory.getConfig().flightReservationUrl());
-        CustomerRegistration registration = new CustomerRegistration(driver);
+        driver.get().get(ConfigFactory.getConfig().flightReservationUrl());
+        CustomerRegistration registration = new CustomerRegistration(driver.get());
 
         String actualFirstName = registration.enterFirstName("Praveen")
                 .andThen()

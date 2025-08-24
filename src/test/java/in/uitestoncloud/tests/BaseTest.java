@@ -3,57 +3,70 @@ package in.uitestoncloud.tests;
 import in.uitestoncloud.utils.configutils.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 
 public class BaseTest {
 
-    public WebDriver driver;
+    public ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     @BeforeSuite
-    public void printAllConfigs() {
+    public void setConfigs() {
         ConfigFactory.displayAllConfigs();
     }
 
     @BeforeMethod
     public void setDriver() throws MalformedURLException {
 
-//        DesiredCapabilities capabilities = new DesiredCapabilities();
-//        capabilities.setBrowserName("safari");
-//        driver = new RemoteWebDriver(new URL("http://localhost:5487"), capabilities);
-
-        if (Objects.equals(getBrowserChoice(), "chrome")) {
-            driver = new ChromeDriver();
-        } else if (Objects.equals(getBrowserChoice(), "msedge")) {
-            driver = new EdgeDriver();
-        } else if (Objects.equals(getBrowserChoice(), "firefox")) {
-            driver = new FirefoxDriver();
+        if (ConfigFactory.getConfig().seleniumGridEnabled()) {
+            getRemoteDriver();
+        } else {
+            getLocalDriver();
         }
-        driver.manage().window().maximize();
+        driver.get().manage().window().maximize();
     }
 
     @AfterMethod
     public void quitDriver() {
-        driver.quit();
+        driver.get().quit();
     }
 
-
-    public String getBrowserChoice() {
-        String browserType;
-        if (System.getProperty("browserType") != null) {
-            browserType = System.getProperty("browserType");
-            System.out.println("Maven Configuration browserType = " + browserType);
+    public void getRemoteDriver() throws MalformedURLException {
+        ChromeOptions chromeOptions;
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        if (ConfigFactory.getConfig().browserType().equals("chrome")) {
+            chromeOptions = new ChromeOptions();
+            if (ConfigFactory.getConfig().browserHeadless()) {
+                chromeOptions.addArguments("--headless");
+            }
+            capabilities.setBrowserName(ConfigFactory.getConfig().browserType());
+            capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+            chromeOptions.merge(capabilities);
+            driver.set(new RemoteWebDriver(new URL(String.format(ConfigFactory.getConfig().seleniumGridUrl(),ConfigFactory.getConfig().seleniumGridHostname())), chromeOptions));
         } else {
-            browserType = ConfigFactory.getConfig().browserType();
-            System.out.println("Test Configuration browserType = " + browserType);
+            capabilities.setBrowserName("firefox");
+            driver.set(new RemoteWebDriver(new URL(String.format(ConfigFactory.getConfig().seleniumGridUrl(),ConfigFactory.getConfig().seleniumGridHostname())), capabilities));
         }
-        return browserType;
+    }
+
+    public void getLocalDriver() {
+        String browserChoice = ConfigFactory.getConfig().browserType();
+        switch (browserChoice) {
+            case "chrome" ->
+                    driver.set(new ChromeDriver(ConfigFactory.getConfig().browserHeadless() ? new ChromeOptions().addArguments("--headless") : new ChromeOptions()));
+            case "firefox" -> driver.set(new FirefoxDriver());
+        }
     }
 
 }

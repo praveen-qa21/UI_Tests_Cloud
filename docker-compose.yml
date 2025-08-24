@@ -1,0 +1,48 @@
+services:
+  hub:
+    image: selenium/hub:latest
+    ports:
+      - 5487:4444
+  chrome:
+    image: selenium/node-chrome:latest
+    shm_size: 2gb
+    depends_on:
+      - hub
+    deploy:
+      replicas: 2
+    environment:
+      - SE_EVENT_BUS_HOST=hub
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSION=2
+  firefox:
+    image: selenium/node-firefox:latest
+    shm_size: 2gb
+    depends_on:
+      - hub
+    deploy:
+      replicas: 2
+    environment:
+      - SE_EVENT_BUS_HOST=hub
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSION=2
+  smoketests:
+    image: praveendocktrail/ui-test-cloud-image:v0.7
+    depends_on:
+      - chrome
+    environment:
+      - seleniumGridEnabled=true
+      - browserType=chrome
+      - seleniumGridHostname=hub
+      - test_suite=testngReg.xml
+      - threadcount=2
+    volumes:
+      - ./ResultsFromContainer:/home/ui-test-cloud/test-output
+#  regressiontests:
+#    image: praveendocktrail/ui-test-cloud-image:v0.1
+#    depends_on:
+#      - chrome
+#    environment:
+#      - seleniumGridEnabled=true
+#      - browserType=chrome
+#    volumes:
+#      - ./ResultsFromContainer:home/ui-test-cloud/test-output

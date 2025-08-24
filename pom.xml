@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <selenium.version>4.34.0</selenium.version>
         <testng.version>7.11.0</testng.version>
+        <project.directory>${project.build.directory}/UI_Tests_Cloud-Package</project.directory>
 
     </properties>
 
@@ -72,6 +73,7 @@
 
 
     <build>
+        <finalName>ui-test-cloud</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -82,10 +84,6 @@
                         <!--suppress UnresolvedMavenProperty -->
                         <suiteXmlFile>${testng.suite}</suiteXmlFile>
                     </suiteXmlFiles>
-                    <systemPropertyVariables>
-                        <!--suppress UnresolvedMavenProperty -->
-                        <browserName>${browserType}</browserName>
-                    </systemPropertyVariables>
                 </configuration>
             </plugin>
             <plugin>
@@ -105,12 +103,81 @@
                         <!--suppress UnresolvedMavenProperty -->
                         <suiteXmlFile>${testng.suite}</suiteXmlFile>
                     </suiteXmlFiles>
-                    <systemPropertyVariables>
-                        <!--suppress UnresolvedMavenProperty -->
-                        <browserName>${browserType}</browserName>
-                    </systemPropertyVariables>
                 </configuration>
             </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.directory}</outputDirectory>
+                            <resources>
+<!--                                <resource>-->
+<!--                                    <directory>src/test/resources</directory>-->
+<!--                                </resource>-->
+                                <resource>
+                                    <directory>.</directory>
+                                    <includes>
+                                        <include>testngReg.xml</include>
+                                        <include>testngSmoke.xml</include>
+                                        <include>checkgridstatus.sh</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <outputDirectory>${project.directory}</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+<!--                        <configuration>-->
+<!--                            <includes>**/*.class</includes>-->
+<!--                        </configuration>-->
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.7.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.directory}/libs</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>

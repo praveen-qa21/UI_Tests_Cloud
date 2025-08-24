@@ -4,36 +4,32 @@ package in.uitestoncloud.utils.configutils;
 import org.aeonbits.owner.Accessible;
 import org.aeonbits.owner.Config;
 
-
-@Config.Sources({"classpath:UITestConfig.properties"})
+@Config.LoadPolicy(Config.LoadType.MERGE)
+@Config.Sources({"system:properties", "classpath:UITestConfig.properties"})
 public interface UITestConfig extends Config, Accessible {
 
-    @Key("env")
     String env();
 
-    @Key("parallel.execution.count")
+    @Key("threadcount")
     @DefaultValue("5")
-    int parallelExecutionCount();
+    int threadcount();
 
-    @Key("selenium.grid.enabled")
     boolean seleniumGridEnabled();
 
-    @Key("selenium.grid.url")
     String seleniumGridUrl();
 
-    @Key("selenium.grid.hostname")
     String seleniumGridHostname();
 
-    @Key("browser.type")
+    @Key("browserType")
+    @DefaultValue("chrome")
     String browserType();
 
-    @Key("browser.headless")
+    @Key("browserHeadless")
+    @DefaultValue("false")
     boolean browserHeadless();
 
-    @Key("flightReservation.url")
     String flightReservationUrl();
 
-    @Key("vendorPortal.url")
     String vendorPortalUrl();
 
 }
