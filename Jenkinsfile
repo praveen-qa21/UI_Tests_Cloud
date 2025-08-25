@@ -33,7 +33,12 @@ pipeline {
 
     post {
         always {
-            echo "Reporting and cleanup tasks"
-        }
+             echo "Reporting and cleanup tasks"
+                       allure([
+                           includeProperties: false,
+                           jdk: '',
+                           results: [[path: 'target/allure-results']]
+                       ])
+                   }
     }
 }
