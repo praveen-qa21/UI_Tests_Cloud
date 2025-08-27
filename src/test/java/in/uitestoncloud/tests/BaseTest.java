@@ -62,9 +62,17 @@ public class BaseTest {
 
     public void getLocalDriver() {
         String browserChoice = ConfigFactory.getConfig().browserType();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        if (ConfigFactory.getConfig().browserHeadless()) {
+            chromeOptions.addArguments("--headless");
+        }
+        chromeOptions.addArguments("--no-sandbox");             // required in CI
+        chromeOptions.addArguments("--disable-dev-shm-usage");  // overcome limited resource issues
+        chromeOptions.addArguments("--remote-allow-origins=*");
+
         switch (browserChoice) {
             case "chrome" ->
-                    driver.set(new ChromeDriver(ConfigFactory.getConfig().browserHeadless() ? new ChromeOptions().addArguments("--headless") : new ChromeOptions()));
+                    driver.set(new ChromeDriver(chromeOptions));
             case "firefox" -> driver.set(new FirefoxDriver());
         }
     }

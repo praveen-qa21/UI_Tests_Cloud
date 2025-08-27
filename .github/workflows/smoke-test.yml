@@ -21,4 +21,4 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Executing Smoke Tests
-        run:  mvn clean test -Ppr-checks
+        run:  mvn clean test -Ppr-checks -DbrowserHeadless=true
