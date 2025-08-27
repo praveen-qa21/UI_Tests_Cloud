@@ -30,6 +30,16 @@ jobs:
           browsers: chrome
           last-versions: 1
 
+      - name: Restore Maven cache
+        uses: skjolber/maven-cache-github-action@v3.1.1
+        with:
+         step: restore
+
 
       - name: Executing Smoke Tests
-        run: mvn clean test -Ppr-checks -DseleniumGridEnabled=true
+        run: mvn clean test -Pfull-regression -DseleniumGridEnabled=true
+
+      - name: Save Maven cache
+        uses: skjolber/maven-cache-github-action@v3.1.1
+        with:
+         step: save
