@@ -37,7 +37,7 @@ jobs:
 
 
       - name: Executing Smoke Tests
-        run: mvn clean test -Pfull-regression -DseleniumGridEnabled=true
+        run: mvn clean verify -Pfull-regression -DseleniumGridEnabled=true
 
       - name: Save Maven cache
         uses: skjolber/maven-cache-github-action@v3.1.1
