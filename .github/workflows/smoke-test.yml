@@ -3,12 +3,11 @@ name: Smoke-Tests
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 jobs:
   run-smoke-test-on-each-push-to-main:
-    container:
     runs-on: ubuntu-latest
 
     steps:
