@@ -20,5 +20,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v5
 
+      - name: Setup Selenoid
+        uses: ajinx/selenoid
+        id: start-selenoid
+        continue-on-error: false
+        with:
+          version: 1.11.3
+          args: -limit 3
+          browsers: chrome
+          last-versions: 1
+
+
       - name: Executing Smoke Tests
-        run:  mvn clean test -Ppr-checks -DbrowserHeadless=true
+        run: mvn clean test -Ppr-checks -DseleniumGridEnabled=true

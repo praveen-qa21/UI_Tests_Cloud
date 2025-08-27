@@ -47,11 +47,15 @@ public class BaseTest {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         if (ConfigFactory.getConfig().browserType().equals("chrome")) {
             chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--no-sandbox");             // required in CI
+            chromeOptions.addArguments("--disable-dev-shm-usage");  // overcome limited resource issues
+            chromeOptions.addArguments("--remote-allow-origins=*");
             if (ConfigFactory.getConfig().browserHeadless()) {
                 chromeOptions.addArguments("--headless");
             }
             capabilities.setBrowserName(ConfigFactory.getConfig().browserType());
             capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+            capabilities.setCapability("enableVNC",true);
             chromeOptions.merge(capabilities);
             driver.set(new RemoteWebDriver(new URL(String.format(ConfigFactory.getConfig().seleniumGridUrl(),ConfigFactory.getConfig().seleniumGridHostname())), chromeOptions));
         } else {
